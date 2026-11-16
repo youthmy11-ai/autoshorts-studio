@@ -106,6 +106,8 @@ python -m unittest discover -s tests -v
 ## Companion Tools in ForgeSuite Studio
 
 - **[TokenCost Lab (Free Web App)](https://youthmy11-ai.github.io/tokencalc.html)** — Estimate LLM token usage & monthly AI API costs across 7 frontier models.
+- **[JSON2Sheet & PII Masker (Free Web App)](https://youthmy11-ai.github.io/json2sheet.html)** — Flatten nested JSON API payloads into clean CSV/Markdown tables with PII redaction.
+- **[ScopeGuard SOW Builder (Free Web App)](https://youthmy11-ai.github.io/sowbuilder.html)** — Draft milestone contracts & export deposits directly into CryptoBill Forge.
 - **[CryptoBill Forge (Free Web App)](https://youthmy11-ai.github.io/cryptobill.html)** — Build A4 PDF & shareable USDT / PayPal freelance invoices with offline QR codes.
 - **[All-Access Pro Bundle ($35 · Save $14)](https://youthmy11-ai.github.io/#pricing)** — Lifetime keys for AutoShorts Studio Pro ($19), WebLead Extractor Pro ($15), and CryptoBill Forge Pro ($15) with instant on-chain BSC USDT verification.
 
