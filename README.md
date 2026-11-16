@@ -103,6 +103,14 @@ python -m unittest discover -s tests -v
 
 ---
 
+## Companion Tools in ForgeSuite Studio
+
+- **[TokenCost Lab (Free Web App)](https://youthmy11-ai.github.io/tokencalc.html)** — Estimate LLM token usage & monthly AI API costs across 7 frontier models.
+- **[CryptoBill Forge (Free Web App)](https://youthmy11-ai.github.io/cryptobill.html)** — Build A4 PDF & shareable USDT / PayPal freelance invoices with offline QR codes.
+- **[All-Access Pro Bundle ($35 · Save $14)](https://youthmy11-ai.github.io/#pricing)** — Lifetime keys for AutoShorts Studio Pro ($19), WebLead Extractor Pro ($15), and CryptoBill Forge Pro ($15) with instant on-chain BSC USDT verification.
+
+---
+
 ## License
 
 Released under the [MIT License](LICENSE).
