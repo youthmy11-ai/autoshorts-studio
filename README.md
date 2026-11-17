@@ -108,6 +108,8 @@ python -m unittest discover -s tests -v
 - **[TokenCost Lab (Free Web App)](https://youthmy11-ai.github.io/tokencalc.html)** — Estimate LLM token usage & monthly AI API costs across 7 frontier models.
 - **[JSON2Sheet & PII Masker (Free Web App)](https://youthmy11-ai.github.io/json2sheet.html)** — Flatten nested JSON API payloads into clean CSV/Markdown tables with PII redaction.
 - **[ScopeGuard SOW Builder (Free Web App)](https://youthmy11-ai.github.io/sowbuilder.html)** — Draft milestone contracts & export deposits directly into CryptoBill Forge.
+- **[Calldata Lens (Free Web App)](https://youthmy11-ai.github.io/txdecode.html)** — Offline EVM ABI calldata decoder & unlimited approval inspector.
+- **[EnvShield Secret Scanner (Free Web App)](https://youthmy11-ai.github.io/envshield.html)** — Offline `.env`, API key & private key leak scanner and safe redactor.
 - **[CryptoBill Forge (Free Web App)](https://youthmy11-ai.github.io/cryptobill.html)** — Build A4 PDF & shareable USDT / PayPal freelance invoices with offline QR codes.
 - **[All-Access Pro Bundle ($35 · Save $14)](https://youthmy11-ai.github.io/#pricing)** — Lifetime keys for AutoShorts Studio Pro ($19), WebLead Extractor Pro ($15), and CryptoBill Forge Pro ($15) with instant on-chain BSC USDT verification.
 
