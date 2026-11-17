@@ -6,7 +6,12 @@ import argparse
 import sys
 from pathlib import Path
 
-from .audio_beats import compute_beat_segments, parse_milestones, slice_audio_by_milestones
+from .audio_beats import (
+    build_beat_srt,
+    compute_beat_segments,
+    parse_milestones,
+    slice_audio_by_milestones,
+)
 from .dedup import MediaHistoryStore, compute_file_sha256
 from .ffmpeg_engine import (
     ASPECT_PRESETS,
@@ -227,7 +232,38 @@ def build_parser() -> argparse.ArgumentParser:
     p_lic.add_argument("--clear", action="store_true", help="Clear any locally saved Pro license key.")
     p_lic.set_defaults(func=_cmd_check_license)
 
+    p_srt = sub.add_parser("subtitles-srt", help="Generate a beat-synced SubRip (.srt) caption track from milestones.")
+    p_srt.add_argument("--milestones", required=True, help="Comma-separated timestamps or durations.")
+    p_srt.add_argument("--output", required=True, help="Output .srt file path.")
+    p_srt.add_argument(
+        "--captions",
+        help="Optional pipe-separated ('|') caption lines matched sequentially to beat scenes.",
+    )
+    p_srt.add_argument(
+        "--mode",
+        default="timestamps",
+        choices=("timestamps", "durations"),
+        help="Milestone interpretation mode.",
+    )
+    p_srt.add_argument("--total-duration", type=float, help="Optional total track duration for trailing caption.")
+    p_srt.set_defaults(func=_cmd_subtitles_srt)
+
     return parser
+
+
+def _cmd_subtitles_srt(args: argparse.Namespace) -> int:
+    captions = [c.strip() for c in args.captions.split("|")] if args.captions else None
+    srt_content = build_beat_srt(
+        milestones=args.milestones,
+        captions=captions,
+        mode=args.mode,
+        total_duration=args.total_duration,
+    )
+    out_path = Path(args.output).expanduser()
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_path.write_text(srt_content, encoding="utf-8")
+    print(f"Wrote beat-synced subtitles: {out_path}")
+    return 0
 
 
 def main(argv: list[str] | None = None) -> int:

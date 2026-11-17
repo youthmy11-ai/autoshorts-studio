@@ -322,3 +322,36 @@ def slice_audio_by_milestones(
         finally:
             part.unlink(missing_ok=True)
     return outputs
+
+
+def format_srt_timestamp(seconds: float) -> str:
+    """Format non-negative seconds as HH:MM:SS,mmm for SubRip (.srt) files."""
+    if not math.isfinite(seconds) or seconds < 0:
+        raise ValueError(f"SRT timestamp seconds must be finite and non-negative, got {seconds!r}")
+    total_ms = int(round(seconds * 1000))
+    hours, rem_ms = divmod(total_ms, 3_600_000)
+    minutes, rem_ms = divmod(rem_ms, 60_000)
+    secs, ms = divmod(rem_ms, 1000)
+    return f"{hours:02d}:{minutes:02d}:{secs:02d},{ms:03d}"
+
+
+def build_beat_srt(
+    milestones: str | Sequence[str | int | float],
+    captions: Sequence[str] | None = None,
+    mode: str = "timestamps",
+    total_duration: float | None = None,
+) -> str:
+    """Generate a beat-synced SubRip (.srt) caption track from milestone markers."""
+    parsed = parse_milestones(milestones, mode=mode)
+    segments = compute_beat_segments(parsed, total_duration=total_duration)
+    if not segments:
+        raise ValueError("No valid segments computed from the provided milestones.")
+
+    caption_list = [str(c).strip() for c in captions] if captions else []
+    blocks: list[str] = []
+    for seg in segments:
+        start_ts = format_srt_timestamp(seg.start_seconds)
+        end_ts = format_srt_timestamp(seg.end_seconds)
+        text = caption_list[seg.index] if seg.index < len(caption_list) and caption_list[seg.index] else f"Scene {seg.index + 1}"
+        blocks.append(f"{seg.index + 1}\n{start_ts} --> {end_ts}\n{text}")
+    return "\n\n".join(blocks) + "\n"

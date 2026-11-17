@@ -93,6 +93,15 @@ Check or activate a Pro license key:
 python -m autoshorts_studio.cli check-license --activate FS-PRO-AS-XXXXXXXX-XXXX
 ```
 
+Generate beat-synced `.srt` captions matched to audio milestones:
+
+```bash
+python -m autoshorts_studio.cli subtitles-srt \
+  --milestones "0:15, 0:30, 1:02" \
+  --captions "Stop scrolling | 3 tools to automate Shorts | Try AutoShorts Studio" \
+  --output ./out/captions.srt
+```
+
 ---
 
 ## Running Automated Tests

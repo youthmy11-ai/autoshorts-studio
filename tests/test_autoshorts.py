@@ -18,7 +18,9 @@ if str(PACKAGE_ROOT) not in sys.path:
 
 from autoshorts_studio.audio_beats import (
     build_audio_trim_cmd,
+    build_beat_srt,
     compute_beat_segments,
+    format_srt_timestamp,
     parse_milestones,
     parse_timestamp,
     slice_audio_by_milestones,
@@ -395,6 +397,22 @@ class RealFFmpegEndToEndTests(unittest.TestCase):
                     self.assertEqual(
                         cli_main(
                             [
+                                "subtitles-srt",
+                                "--milestones",
+                                "1.5",
+                                "--total-duration",
+                                "3.0",
+                                "--captions",
+                                "Hook Intro | Call To Action",
+                                "--output",
+                                str(root / "subs" / "beat.srt"),
+                            ]
+                        ),
+                        0,
+                    )
+                    self.assertEqual(
+                        cli_main(
+                            [
                                 "build",
                                 "--input",
                                 str(src_image),
@@ -418,6 +436,13 @@ class RealFFmpegEndToEndTests(unittest.TestCase):
                 self.assertIn("Tier:             PRO", cli_text)
                 self.assertIn("Fresh unique:   0", cli_text)
                 self.assertIn("2 sources / 2 outputs", cli_text)
+                srt_text = (root / "subs" / "beat.srt").read_text(encoding="utf-8")
+                self.assertEqual(format_srt_timestamp(3661.25), "01:01:01,250")
+                self.assertIn("00:00:00,000 --> 00:00:01,500\nHook Intro", srt_text)
+                self.assertIn("00:00:01,500 --> 00:00:03,000\nCall To Action", srt_text)
+                direct_srt = build_beat_srt("0:02, 0:05", total_duration=7.0)
+                self.assertIn("Scene 1", direct_srt)
+                self.assertIn("Scene 3", direct_srt)
                 cli_mp4s = list((root / "cli_build").glob("*.mp4"))
                 self.assertEqual(len(cli_mp4s), 1)
                 self.assertGreater(cli_mp4s[0].stat().st_size, 0)
